@@ -6,6 +6,7 @@ use warp::{ws::Message, Filter, Rejection};
 
 mod handler;
 mod ws;
+mod parser;
 
 type Result<T> = std::result::Result<T, Rejection>;
 type Clients = Arc<RwLock<HashMap<String, Client>>>;
@@ -13,7 +14,6 @@ type Clients = Arc<RwLock<HashMap<String, Client>>>;
 #[derive(Debug, Clone)]
 pub struct Client {
     pub user_id: usize,
-    pub topics: Vec<String>,
     pub sender: Option<mpsc::UnboundedSender<std::result::Result<Message, warp::Error>>>,
 }
 

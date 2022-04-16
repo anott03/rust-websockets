@@ -54,7 +54,6 @@ async fn register_client(id: String, user_id: usize, clients: Clients) {
         id,
         Client {
             user_id,
-            topics: vec![String::from("cats")],
             sender: None,
         },
     );
