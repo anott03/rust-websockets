@@ -20,24 +20,24 @@ pub struct Event {
     message: String,
 }
 
-pub async fn publish_handler(body: Event, clients: Clients) -> Result<impl Reply> {
-    clients
-        .read()
-        .await
-        .iter()
-        .filter(|(_, client)| match body.user_id {
-            Some(v) => client.user_id == v,
-            None => true,
-        })
-        .filter(|(_, client)| client.topics.contains(&body.topic))
-        .for_each(|(_, client)| {
-            if let Some(sender) = &client.sender {
-                let _ = sender.send(Ok(Message::text(body.message.clone())));
-            }
-        });
+// pub async fn publish_handler(body: Event, clients: Clients) -> Result<impl Reply> {
+    // clients
+        // .read()
+        // .await
+        // .iter()
+        // .filter(|(_, client)| match body.user_id {
+            // Some(v) => client.user_id == v,
+            // None => true,
+        // })
+        // .filter(|(_, client)| client.topics.contains(&body.topic))
+        // .for_each(|(_, client)| {
+            // if let Some(sender) = &client.sender {
+                // let _ = sender.send(Ok(Message::text(body.message.clone())));
+            // }
+        // });
 
-    Ok(StatusCode::OK)
-}
+    // Ok(StatusCode::OK)
+// }
 
 pub async fn register_handler(body: RegisterRequest,  clients: Clients) -> Result<impl Reply> {
     let user_id = body.user_id;

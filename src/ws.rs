@@ -34,15 +34,13 @@ pub async fn client_connection(ws: WebSocket, id: String, clients: Clients, mut 
 }
 
 async fn client_msg(id: &str, msg: Message, clients: &Clients) {
-    println!("received message from {}: {:?}", id, msg);
     let message = match msg.to_str() {
         Ok(v) => v,
         Err(_) => return,
     };
 
-    if message == "ping" || message == "ping\n" {
-        return;
+    match parser::parse_message(id, message) {
+        Ok(_) => {},
+        Err(e) => eprintln!("{}", e),
     }
-
-    println!("{}: {:?}", id, parser::parse_message(message));
 }
